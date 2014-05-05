@@ -8,7 +8,7 @@ A Clojure library for consuming the
 Available on [Clojars](http://clojars.org/gws/yelp).
 
 ```clojure
-[gws/yelp "0.1.0"]
+[gws/yelp "0.2.0"]
 ```
 
 ```clojure

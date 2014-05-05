@@ -1,4 +1,4 @@
-(defproject gws/yelp "0.1.0"
+(defproject gws/yelp "0.2.0"
   :description "A Clojure implementation of the Yelp API"
   :url "https://gitlab.com/gws/yelp"
   :min-lein-version "2.0.0"
