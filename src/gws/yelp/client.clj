@@ -41,3 +41,15 @@
       (.addQuerystringParameter req (str k) (str v)))
     (.signRequest (:service client) (:token client) req)
     (-> req .send .getBody (json/read-str :key-fn keyword))))
+
+(defn business-search
+  "http://www.yelp.com/developers/documentation/v2/search_api
+
+   Pass a map with the parameters as key-value pairs."
+  [client params]
+  {:pre [(instance? YelpClient client)]}
+  (let [req (OAuthRequest. (Verb/GET) (build-endpoint "search"))]
+    (doseq [[k, v] params]
+      (.addQuerystringParameter req (str k) (str v)))
+    (.signRequest (:service client) (:token client) req)
+    (-> req .send .getBody (json/read-str :key-fn keyword))))

@@ -29,3 +29,9 @@
   (let [client (create-test-client)
         response (c/business-lookup client "mothers-bistro-and-bar-portland")]
     (is (= "mothers-bistro-and-bar-portland" (:id response)))))
+
+(deftest business-search
+  (let [client (create-test-client)
+        response (c/business-search client {"location" "Portland, OR"
+                                            "term" "Mother's Bistro and Bar"})]
+    (is (= "mothers-bistro-and-bar-portland" (get-in response [:businesses 0 :id])))))
