@@ -1,55 +1,25 @@
 (ns gws.yelp.client
-  (:require [clojure.data.json :as json])
   (:import [org.scribe.builder ServiceBuilder]
            [org.scribe.builder.api DefaultApi10a]
-           [org.scribe.model OAuthRequest Token Verb]))
+           [org.scribe.model Token]))
+
+(def ^:private YelpApi2
+  "OAuth 1.0a client for Yelp. A little odd in that it doesn't use any token
+  endpoints or an authorization URL."
+  (proxy [DefaultApi10a] []
+    (getRequestTokenEndpoint [] nil)
+    (getAccessTokenEndpoint [] nil)
+    (getAuthorizationUrl [^Token t] nil)))
 
 (defrecord YelpClient [service token])
 
-(def ^:private base-url "http://api.yelp.com/v2/")
-
-(def ^:private YelpApi2
-  (class
-    (proxy [DefaultApi10a] []
-      (getAccesTokenEndpoint [] nil)
-      (getAuthorizationUrl [t] nil)
-      (getRequestTokenEndpoint [] nil))))
-
-(defn- build-endpoint
-  [call]
-  (str base-url call))
-
 (defn create
   "Build a Yelp client."
-  [consumer-key consumer-secret token token-secret]
+  [^String consumer-key ^String consumer-secret ^String token ^String token-secret]
   (let [service (.. (ServiceBuilder.)
-                    (provider YelpApi2)
+                    (provider (class YelpApi2))
                     (apiKey consumer-key)
                     (apiSecret consumer-secret)
                     (build))
         token (Token. token token-secret)]
     (->YelpClient service token)))
-
-(defn business-lookup
-  "http://www.yelp.com/developers/documentation/v2/business
-
-   Pass a map with the optional parameters as key-value pairs."
-  [client id & [params]]
-  {:pre [(instance? YelpClient client)]}
-  (let [req (OAuthRequest. (Verb/GET) (build-endpoint (str "business/" id)))]
-    (doseq [[k, v] params]
-      (.addQuerystringParameter req (str k) (str v)))
-    (.signRequest (:service client) (:token client) req)
-    (-> req .send .getBody (json/read-str :key-fn keyword))))
-
-(defn business-search
-  "http://www.yelp.com/developers/documentation/v2/search_api
-
-   Pass a map with the parameters as key-value pairs."
-  [client params]
-  {:pre [(instance? YelpClient client)]}
-  (let [req (OAuthRequest. (Verb/GET) (build-endpoint "search"))]
-    (doseq [[k, v] params]
-      (.addQuerystringParameter req (str k) (str v)))
-    (.signRequest (:service client) (:token client) req)
-    (-> req .send .getBody (json/read-str :key-fn keyword))))
