@@ -1,18 +1,18 @@
-# yelp
+# clj-yelp
 
 A Clojure library for consuming the
 [Yelp API](http://www.yelp.com/developers/documentation/v2/overview).
 
 ## Installation
 
-[![Clojars Project](http://clojars.org/gws/clj-yelp/latest-version.svg)](http://clojars.org/gws/clj-yelp)
+[![Clojars Project](https://clojars.org/gws/clj-yelp/latest-version.svg)](https://clojars.org/gws/clj-yelp)
 
 ## Usage
 
 ```clojure
 (ns your.app
   (:require [gws.yelp.client :as client]
-            [gws.yelp.api :as api))
+            [gws.yelp.api :as api]))
 
 ; Create a Yelp client with your API v2 access keys.
 (def yelp-client (client/create "CONSUMER KEY" "CONSUMER SECRET" "TOKEN" "TOKEN SECRET"))
