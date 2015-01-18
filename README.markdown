@@ -1,3 +1,6 @@
+[![Status of clj-yelp dependencies.](https://jarkeeper.com/gws/clj-yelp/status.svg)]
+(https://jarkeeper.com/gws/clj-yelp)
+
 # clj-yelp
 
 A Clojure library for consuming the
