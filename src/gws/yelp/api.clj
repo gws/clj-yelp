@@ -1,5 +1,5 @@
 (ns gws.yelp.api
-  (:require [clojure.data.json :as json]
+  (:require [cheshire.core :as json]
             [gws.yelp.client])
   (:import [gws.yelp.client YelpClient]
            [org.scribe.oauth OAuth10aServiceImpl]
@@ -18,7 +18,7 @@
   (doseq [[k v] params]
     (.addQuerystringParameter req (name k) (str v)))
   (.signRequest ^OAuth10aServiceImpl (:service client) (:token client) req)
-  (json/read-str (.. req send getBody) :key-fn keyword))
+  (json/parse-string (.. req send getBody) true))
 
 (defn business
   "http://www.yelp.com/developers/documentation/v2/business

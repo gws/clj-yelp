@@ -5,6 +5,6 @@
   :license {:name "Apache 2.0"
             :url "https://www.apache.org/licenses/LICENSE-2.0"}
   :profiles {:dev {:global-vars {*warn-on-reflection* true}}}
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/data.json "0.2.5"]
-                 [org.scribe/scribe "1.3.5"]])
+  :dependencies [[cheshire "5.4.0"]
+                 [org.clojure/clojure "1.6.0"]
+                 [org.scribe/scribe "1.3.7"]])
