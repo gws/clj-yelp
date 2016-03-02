@@ -1,4 +1,4 @@
-(defproject gws/clj-yelp "0.3.2"
+(defproject gws/clj-yelp "0.3.3"
   :description "A Clojure implementation of the Yelp API"
   :url "https://gitlab.com/gws/clj-yelp"
   :min-lein-version "2.0.0"
